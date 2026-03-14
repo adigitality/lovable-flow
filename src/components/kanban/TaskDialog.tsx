@@ -20,7 +20,6 @@ import {
 } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Plus, X } from "lucide-react";
-import { Switch } from "@/components/ui/switch";
 
 interface TaskDialogProps {
   open: boolean;
@@ -34,7 +33,6 @@ interface TaskDialogProps {
     category?: string;
     due_date?: string;
     subtasks?: string[];
-    enable_cloud?: boolean;
   }) => void;
   onToggleSubtask?: (id: string, completed: boolean) => void;
 }
@@ -56,7 +54,6 @@ export function TaskDialog({
   const [dueDate, setDueDate] = useState("");
   const [newSubtasks, setNewSubtasks] = useState<string[]>([]);
   const [subtaskInput, setSubtaskInput] = useState("");
-  const [enableCloud, setEnableCloud] = useState(false);
 
   useEffect(() => {
     if (task) {
@@ -66,7 +63,6 @@ export function TaskDialog({
       setCategory(task.category || "");
       setDueDate(task.due_date || "");
       setNewSubtasks([]);
-      setEnableCloud(task.enable_cloud || false);
     } else {
       setTitle("");
       setDescription("");
@@ -74,7 +70,6 @@ export function TaskDialog({
       setCategory("");
       setDueDate("");
       setNewSubtasks([]);
-      setEnableCloud(false);
     }
   }, [task, defaultStatus, open]);
 
@@ -95,7 +90,6 @@ export function TaskDialog({
       category: category || undefined,
       due_date: dueDate || undefined,
       subtasks: newSubtasks.length > 0 ? newSubtasks : undefined,
-      enable_cloud: enableCloud,
     });
     onOpenChange(false);
   };
@@ -198,15 +192,6 @@ export function TaskDialog({
                 <Plus className="h-4 w-4" />
               </Button>
             </div>
-          </div>
-
-          <div className="flex items-center justify-between">
-            <Label htmlFor="enableCloud" className="mr-2">Enable Cloud</Label>
-            <Switch
-              id="enableCloud"
-              checked={enableCloud}
-              onCheckedChange={(checked) => setEnableCloud(checked)}
-            />
           </div>
 
           <DialogFooter>
